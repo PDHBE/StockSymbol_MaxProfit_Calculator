@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Result</title>
+</head>
+<body>
+<h1>최대 이익을 내는 구매, 판매 날짜 정보</h1>
+<p th:text="${errMsg}">Error Message</p>
+<p th:utext="${#strings.replace(result, newLineChar, '&lt;br /&gt;')}">Result</p>
+</body>
+</html>
