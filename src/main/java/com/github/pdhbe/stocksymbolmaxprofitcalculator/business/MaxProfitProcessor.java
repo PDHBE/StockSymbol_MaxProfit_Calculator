@@ -1,6 +1,6 @@
 package com.github.pdhbe.stocksymbolmaxprofitcalculator.business;
 
-import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.dailyStockInfo;
+import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.dto.StockDto;
 
 import java.util.Comparator;
 import java.util.List;
@@ -10,16 +10,16 @@ public class MaxProfitProcessor {
     private static final int SECOND_DAY = 1;
     private static final int LIMIT_OF_DAY = 180;
 
-    private List<dailyStockInfo> dailyStockInfoList;
-    private dailyStockInfo buyDateOfMaxProfit;
-    private dailyStockInfo sellDateOfMaxProfit;
+    private List<StockDto> stockDtoList;
+    private StockDto buyDateOfMaxProfit;
+    private StockDto sellDateOfMaxProfit;
     private int lastDay;
 
-    public void setDailyStockInfoList(List<dailyStockInfo> dailyStockInfoList) throws Exception {
-        if (dailyStockInfoList.size() < 2) {
+    public void setDailyStockInfoList(List<StockDto> stockDtoList) throws Exception {
+        if (stockDtoList.size() < 2) {
             throw new IllegalArgumentException("It should be at least two days.");
         }
-        this.dailyStockInfoList = dailyStockInfoList;
+        this.stockDtoList = stockDtoList;
         this.competeMaxProfit();
     }
 
@@ -34,14 +34,14 @@ public class MaxProfitProcessor {
         this.cutDailyStockInfoListToLate180Dates();
         this.orderDailyStockInfoListByDateASC();
 
-        double minLowPrice = this.dailyStockInfoList.get(FIRST_DAY).getLowPrice();
+        double minLowPrice = this.stockDtoList.get(FIRST_DAY).getLowPrice();
         int buyDayForMaxProfit = FIRST_DAY;
-        double maxProfit = this.dailyStockInfoList.get(SECOND_DAY).getHighPrice() - this.dailyStockInfoList.get(FIRST_DAY).getLowPrice();
+        double maxProfit = this.stockDtoList.get(SECOND_DAY).getHighPrice() - this.stockDtoList.get(FIRST_DAY).getLowPrice();
         int sellDayForMaxProfit = SECOND_DAY;
 
         for (int today = SECOND_DAY; today < this.lastDay; today++) {
-            double todayHighPrice = this.dailyStockInfoList.get(today).getHighPrice();
-            double todayLowPrice = this.dailyStockInfoList.get(today).getLowPrice();
+            double todayHighPrice = this.stockDtoList.get(today).getHighPrice();
+            double todayLowPrice = this.stockDtoList.get(today).getLowPrice();
             int dayOfMinLowPrice = 0;
 
             if (todayHighPrice - minLowPrice > maxProfit) {
@@ -63,20 +63,20 @@ public class MaxProfitProcessor {
             throw new Exception("Cannot make a profit because the price keeps falling.");
         }
 
-        this.buyDateOfMaxProfit = this.dailyStockInfoList.get(buyDayForMaxProfit);
-        this.sellDateOfMaxProfit = this.dailyStockInfoList.get(sellDayForMaxProfit);
+        this.buyDateOfMaxProfit = this.stockDtoList.get(buyDayForMaxProfit);
+        this.sellDateOfMaxProfit = this.stockDtoList.get(sellDayForMaxProfit);
     }
 
     private void cutDailyStockInfoListToLate180Dates() {
-        if (this.dailyStockInfoList.size() < 180) {
-            this.lastDay = this.dailyStockInfoList.size();
+        if (this.stockDtoList.size() < 180) {
+            this.lastDay = this.stockDtoList.size();
             return;
         }
         this.lastDay = LIMIT_OF_DAY;
-        this.dailyStockInfoList = this.dailyStockInfoList.subList(FIRST_DAY, this.lastDay);
+        this.stockDtoList = this.stockDtoList.subList(FIRST_DAY, this.lastDay);
     }
 
     private void orderDailyStockInfoListByDateASC() {
-        this.dailyStockInfoList.sort(Comparator.comparing(dailyStockInfo::getDate));
+        this.stockDtoList.sort(Comparator.comparing(StockDto::getDate));
     }
 }

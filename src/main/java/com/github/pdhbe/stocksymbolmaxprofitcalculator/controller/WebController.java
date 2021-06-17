@@ -1,9 +1,8 @@
 package com.github.pdhbe.stocksymbolmaxprofitcalculator.controller;
 
 import com.github.pdhbe.stocksymbolmaxprofitcalculator.business.MaxProfitProcessor;
-import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.dailyStockInfo;
-import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stockapi.StockAPI;
-import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stockapi.YahooFinanceAPI;
+import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.dto.StockDto;
+import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stockapi.yahoo.YahooFinanceAPI;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +16,11 @@ public class WebController {
 
     @GetMapping("/maxProfit")
     public String getMaxProfit(@RequestParam String stockSymbol, Model model) {
-        StockAPI stockAPI = new YahooFinanceAPI();
-//        StockAPI stockAPI = new TwelveDataAPI(); 즉시 변경 가능
+        YahooFinanceAPI yahooFinanceAPI = new YahooFinanceAPI();
 
-        List<dailyStockInfo> dailyStockInfoList;
+        List<StockDto> stockDtoList;
         try {
-            dailyStockInfoList = stockAPI.getDailyStockInfoList(stockSymbol);
+            stockDtoList = yahooFinanceAPI.getDailyStockList(stockSymbol);
         } catch (Exception exception) {
             model.addAttribute("errMsg", exception.getMessage());
             return "index";
@@ -30,7 +28,7 @@ public class WebController {
 
 
         try {
-            maxProfitProcessor.setDailyStockInfoList(dailyStockInfoList);
+            maxProfitProcessor.setDailyStockInfoList(stockDtoList);
         } catch (Exception exception) {
             model.addAttribute("errMsg",exception.getMessage());
             return "result";

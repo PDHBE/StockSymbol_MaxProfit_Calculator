@@ -1,13 +1,13 @@
-package com.github.pdhbe.stocksymbolmaxprofitcalculator.data;
+package com.github.pdhbe.stocksymbolmaxprofitcalculator.data.dto;
 
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 
 import java.time.LocalDate;
 
+@Data
 @Builder
-@Getter
-public class dailyStockInfo {
+public class StockDto {
     private final LocalDate date;
     private final double lowPrice;
     private final double highPrice;

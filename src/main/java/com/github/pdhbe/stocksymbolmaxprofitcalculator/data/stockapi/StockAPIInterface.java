@@ -1,9 +1,9 @@
 package com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stockapi;
 
-import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.dailyStockInfo;
+import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.dto.StockDto;
 
 import java.util.List;
 
 public interface StockAPIInterface {
-    List<dailyStockInfo> getDailyStockInfoList(String stockSymbol) throws Exception;
+    List<StockDto> getDailyStockList(String stockSymbol);
 }
