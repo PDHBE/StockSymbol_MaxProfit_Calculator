@@ -1,0 +1,11 @@
+- 패키지 이름 
+- jar 패키징 실행, 배포
+- 예외를 따로 만들고, try는 한번에
+- 예외는 구체적으로
+- 추상 ㅡㅋㄹ래스 지양, 인터페이스로만 구현
+- restTemplate
+- 입력 출력 통합
+- dao, vo, dto
+- 프로세스, 쓰레드
+- 네이밍
+- 하는것, 아는것# StockSymbol_MaxProfit_Calculator
