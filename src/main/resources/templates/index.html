@@ -3,13 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Max Profit Of US Stock Symbol</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-<h1>Input US Stock Symbol</h1>
+<h1>Max Profit Of US Stock Symbol</h1><br>
 <form action="/maxProfit" method="get">
-    <p th:text="${errMsg}"></p>
-    <input type="text" name="stockSymbol">
-    <input type="submit" value="Submit!">
+    <div>
+        <input class="form-control" type="text" placeholder="AAPL, GGOG ..." aria-label="default input example">
+    </div>
+    <br>
+
+    <div>
+        <button type="submit" class="btn btn-secondary btn-lg">Submit</button>
+    </div>
+    <br>
+</form>
+<h2 th:text="${exceptionMsg}"></h2>
+</body>
 </form>
 </body>
 </html>

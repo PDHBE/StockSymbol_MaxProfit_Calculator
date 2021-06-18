@@ -1,6 +1,7 @@
 package com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stockapi.twelve;
 
-import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.dto.StockDto;
+import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.source.twelve.TwelveDataAPI;
+import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stock.StockDto;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

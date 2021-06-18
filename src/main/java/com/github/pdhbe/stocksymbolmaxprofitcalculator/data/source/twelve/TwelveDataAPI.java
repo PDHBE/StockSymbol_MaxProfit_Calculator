@@ -1,18 +1,20 @@
-package com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stockapi.twelve;
+package com.github.pdhbe.stocksymbolmaxprofitcalculator.data.source.twelve;
 
-import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.dto.StockDto;
-import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stockapi.StockAPIInterface;
+import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stock.StockDto;
+import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stock.StockDtoFetcher;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TwelveDataAPI implements StockAPIInterface {
+@Component
+public class TwelveDataAPI implements StockDtoFetcher {
     private static final RestTemplate restTemplate = new RestTemplate();
 
     @Override

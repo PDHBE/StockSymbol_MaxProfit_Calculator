@@ -1,7 +1,7 @@
 package com.github.pdhbe.stocksymbolmaxprofit.business;
 
-import com.github.pdhbe.stocksymbolmaxprofitcalculator.business.MaxProfitProcessor;
-import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.dto.StockDto;
+import com.github.pdhbe.stocksymbolmaxprofitcalculator.business.MaxProfitCalculator;
+import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stock.StockDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class MaxProfitProcessorTest {
-    private static final MaxProfitProcessor maxProfitProcessor = new MaxProfitProcessor();
+class MaxProfitCalculatorTest {
+    private static final MaxProfitCalculator MAX_PROFIT_CALCULATOR = new MaxProfitCalculator();
 
     @Test
     @DisplayName("이틀 미만의 주식 정보 리스트 입력")
@@ -25,7 +25,7 @@ class MaxProfitProcessorTest {
                 .build());
 
         IllegalArgumentException illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> {
-            maxProfitProcessor.setDailyStockInfoList(stockDtoList);
+            MAX_PROFIT_CALCULATOR.calculateMaxProfit(stockDtoList);
         });
         assertEquals("It should be at least two days.", illegalArgumentException.getMessage());
     }
@@ -53,7 +53,7 @@ class MaxProfitProcessorTest {
                 .build());
 
         Exception exception = assertThrows(Exception.class, () -> {
-            maxProfitProcessor.setDailyStockInfoList(stockDtoList);
+            MAX_PROFIT_CALCULATOR.calculateMaxProfit(stockDtoList);
         });
         assertEquals("Cannot make a profit because All prices are same.", exception.getMessage());
     }
@@ -81,7 +81,7 @@ class MaxProfitProcessorTest {
                 .build());
 
         Exception exception = assertThrows(Exception.class, () -> {
-            maxProfitProcessor.setDailyStockInfoList(stockDtoList);
+            MAX_PROFIT_CALCULATOR.calculateMaxProfit(stockDtoList);
         });
         assertEquals("Cannot make a profit because the price keeps falling.", exception.getMessage());
     }

@@ -5,8 +5,26 @@
     <title>Result</title>
 </head>
 <body>
-<h1>최대 이익을 내는 구매, 판매 날짜 정보</h1>
-<p th:text="${errMsg}">Error Message</p>
-<p th:utext="${#strings.replace(result, newLineChar, '&lt;br /&gt;')}">Result</p>
+<h1>Max Profit</h1><br>
+<form th:object="${maxProfitDto}">
+    <div class="mb-3 row">
+        <label>Buy Date</label>
+        <input th:value="*{buyDate}" class="form-control" type="text" placeholder="Disabled readonly input" aria-label="Disabled input example" disabled readonly>
+    </div><br>
+
+    <div class="mb-3 row">
+        <label>Sell Date</label>
+        <input th:value="*{sellDate}" class="form-control" type="text" placeholder="Disabled readonly input" aria-label="Disabled input example" disabled readonly>
+    </div><br>
+
+    <div class="mb-3 row">
+        <label>Max Profit</label>
+        <input th:value="*{maxProfit}" class="form-control" type="text" placeholder="Disabled readonly input" aria-label="Disabled input example" disabled readonly>
+    </div><br>
+</form>
+<p th:text="${exceptionMsg}">Error Message</p><br>
+<form action="/" method="get">
+    <button type="submit" class="btn btn-secondary btn-lg">Home</button>
+</form>
 </body>
 </html>

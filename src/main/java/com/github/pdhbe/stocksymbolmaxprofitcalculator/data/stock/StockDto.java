@@ -1,4 +1,4 @@
-package com.github.pdhbe.stocksymbolmaxprofitcalculator.data.dto;
+package com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stock;
 
 import lombok.Builder;
 import lombok.Data;

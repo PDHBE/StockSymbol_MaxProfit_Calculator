@@ -1,4 +1,4 @@
-package com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stockapi.yahoo;
+package com.github.pdhbe.stocksymbolmaxprofitcalculator.data.source.yahoo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

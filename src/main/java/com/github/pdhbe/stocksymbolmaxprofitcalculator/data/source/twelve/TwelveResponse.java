@@ -1,4 +1,4 @@
-package com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stockapi.twelve;
+package com.github.pdhbe.stocksymbolmaxprofitcalculator.data.source.twelve;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
