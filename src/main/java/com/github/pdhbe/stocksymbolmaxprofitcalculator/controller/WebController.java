@@ -31,6 +31,7 @@ public class WebController {
             model.addAttribute("exceptionMsg", stockException.getMessage());
             return "index";
         } catch (MaxProfitException maxProfitException) {
+            model.addAttribute(MaxProfitDto.builder().build());
             model.addAttribute("exceptionMsg", maxProfitException.getMessage());
             return "result";
         }

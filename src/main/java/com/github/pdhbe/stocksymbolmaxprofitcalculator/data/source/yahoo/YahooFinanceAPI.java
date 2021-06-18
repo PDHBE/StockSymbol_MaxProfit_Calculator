@@ -3,6 +3,7 @@ package com.github.pdhbe.stocksymbolmaxprofitcalculator.data.source.yahoo;
 import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stock.StockDto;
 import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stock.StockDtoFetcher;
 import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stock.StockException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -17,8 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class YahooFinanceAPI implements StockDtoFetcher {
-    private static final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
 
     @Override
     public List<StockDto> getDailyStockList(String stockSymbol) throws StockException {
