@@ -11,7 +11,7 @@ public class MaxProfitCalculator {
     private static final int FIRST_DAY = 0;
     private static final int SECOND_DAY = 1;
 
-    public MaxProfitDto calculateMaxProfit(List<StockDto> dailyStockList) throws MaxProfitException {
+    public MaxProfitDto calculate(String stockSymbol, List<StockDto> dailyStockList) throws MaxProfitException {
         if (dailyStockList.size() < 2) {
             throw new MaxProfitException("It should be at least two days.");
         }
@@ -48,6 +48,7 @@ public class MaxProfitCalculator {
         }
 
         return MaxProfitDto.builder()
+                .stockSymbol(stockSymbol)
                 .buyDate(dailyStockList.get(buyDayForMaxProfit).getDate())
                 .sellDate(dailyStockList.get(sellDayForMaxProfit).getDate())
                 .maxProfit(maxProfit).build();

@@ -8,6 +8,11 @@
 <h1>Max Profit</h1><br>
 <form th:object="${maxProfitDto}">
     <div class="mb-3 row">
+        <label>Stock Symbol</label>
+        <input th:value="*{stockSymbol}" class="form-control" type="text" placeholder="Disabled readonly input" aria-label="Disabled input example" disabled readonly>
+    </div><br>
+
+    <div class="mb-3 row">
         <label>Buy Date</label>
         <input th:value="*{buyDate}" class="form-control" type="text" placeholder="Disabled readonly input" aria-label="Disabled input example" disabled readonly>
     </div><br>

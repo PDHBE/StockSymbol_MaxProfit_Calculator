@@ -49,7 +49,7 @@ class MaxProfitCalculatorTest {
                 .maxProfit(8.0)
                 .build();
 
-        MaxProfitDto actualMaxProfit = maxProfitCalculator.calculateMaxProfit(stockDtoList);
+        MaxProfitDto actualMaxProfit = maxProfitCalculator.calculate("validSymbol",stockDtoList);
 
         assertEquals(expectedMaxProfit,actualMaxProfit);
     }
@@ -64,7 +64,7 @@ class MaxProfitCalculatorTest {
                 .build());
 
         MaxProfitException maxProfitException = assertThrows(MaxProfitException.class, () -> {
-            maxProfitCalculator.calculateMaxProfit(stockDtoList);
+            maxProfitCalculator.calculate("validSymbol",stockDtoList);
         });
 
         assertEquals("It should be at least two days.", maxProfitException.getMessage());
@@ -91,7 +91,7 @@ class MaxProfitCalculatorTest {
 
 
         MaxProfitException maxProfitException = assertThrows(MaxProfitException.class, () -> {
-            maxProfitCalculator.calculateMaxProfit(stockDtoList);
+            maxProfitCalculator.calculate("validSymbol",stockDtoList);
         });
 
         assertEquals("Cannot make a profit because all prices are same.", maxProfitException.getMessage());
@@ -117,7 +117,7 @@ class MaxProfitCalculatorTest {
                 .build());
 
         MaxProfitException maxProfitException = assertThrows(MaxProfitException.class, () -> {
-            maxProfitCalculator.calculateMaxProfit(stockDtoList);
+            maxProfitCalculator.calculate("validSymbol",stockDtoList);
         });
 
         assertEquals("Cannot make a profit because the price keeps falling.", maxProfitException.getMessage());

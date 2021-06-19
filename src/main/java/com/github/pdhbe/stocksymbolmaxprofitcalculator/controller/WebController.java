@@ -24,7 +24,7 @@ public class WebController {
     public String getMaxProfit(@RequestParam String stockSymbol, Model model) {
         try {
             List<StockDto> dailyStockList = stockService.getDailyStockList(stockSymbol);
-            MaxProfitDto maxProfitDto = maxProfitCalculator.calculateMaxProfit(dailyStockList);
+            MaxProfitDto maxProfitDto = maxProfitCalculator.calculate(stockSymbol,dailyStockList);
             model.addAttribute(maxProfitDto);
             return "result";
         } catch (StockException stockException) {
