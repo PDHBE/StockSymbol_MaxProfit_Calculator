@@ -44,6 +44,7 @@ class MaxProfitCalculatorTest {
                         .build()
         );
         MaxProfitDto expectedMaxProfit = MaxProfitDto.builder()
+                .stockSymbol("validSymbol")
                 .buyDate(LocalDate.now().minusDays(2))
                 .sellDate(LocalDate.now())
                 .maxProfit(8.0)
