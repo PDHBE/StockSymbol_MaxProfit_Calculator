@@ -15,7 +15,7 @@ public class StockService implements StockDtoFetcher {
 
     @Override
     public List<StockDto> getDailyStockList(String stockSymbol) throws StockException {
-        return yahooFinanceAPI.getDailyStockList(stockSymbol);
-//        return twelveDataAPI.getDailyStockList(stockSymbol);
+//        return yahooFinanceAPI.getDailyStockList(stockSymbol);
+        return twelveDataAPI.getDailyStockList(stockSymbol);
     }
 }

@@ -2,6 +2,7 @@ package com.github.pdhbe.stocksymbolmaxprofitcalculator.data.source.twelve;
 
 import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stock.StockDto;
 import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stock.StockDtoFetcher;
+import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stock.StockException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -47,7 +48,10 @@ public class TwelveDataAPI implements StockDtoFetcher {
         httpHeaders.set("x-rapidapi-key", "e5fab0f5dbmsha8d96ae52186c72p13eeaejsn3f1d1394b597");
         httpHeaders.set("x-rapidapi-host", "twelve-data1.p.rapidapi.com");
         HttpEntity httpEntity = new HttpEntity(httpHeaders);
-
-        return restTemplate.exchange(url, HttpMethod.GET, httpEntity, TwelveResponse.class);
+        ResponseEntity<TwelveResponse> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, TwelveResponse.class);
+        if(response.getBody().getTwelveDtoList() == null){
+            throw new StockException("Invalid Stock Symbol. Input Again.");
+        }
+        return response;
     }
 }
