@@ -1,6 +1,6 @@
-package com.github.pdhbe.stocksymbolmaxprofitcalculator.business;
+package com.github.pdhbe.stocksymbolmaxprofitcalculator.domain.service;
 
-import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stock.StockDto;
+import com.github.pdhbe.stocksymbolmaxprofitcalculator.domain.model.StockDto;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +11,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class MaxProfitCalculatorTest {
+class MaxProfitCalculationServiceTest {
     @Autowired
-    MaxProfitCalculator maxProfitCalculator;
+    MaxProfitCalculationService maxProfitCalculationService;
 
     @Test
     void validStockList() {
@@ -50,9 +51,9 @@ class MaxProfitCalculatorTest {
                 .maxProfit(8.0)
                 .build();
 
-        MaxProfitDto actualMaxProfit = maxProfitCalculator.calculate("validSymbol",stockDtoList);
+        MaxProfitDto actualMaxProfit = maxProfitCalculationService.calculate("validSymbol", stockDtoList);
 
-        assertEquals(expectedMaxProfit,actualMaxProfit);
+        assertEquals(expectedMaxProfit, actualMaxProfit);
     }
 
     @Test
@@ -65,7 +66,7 @@ class MaxProfitCalculatorTest {
                 .build());
 
         MaxProfitException maxProfitException = assertThrows(MaxProfitException.class, () -> {
-            maxProfitCalculator.calculate("validSymbol",stockDtoList);
+            maxProfitCalculationService.calculate("validSymbol", stockDtoList);
         });
 
         assertEquals("It should be at least two days.", maxProfitException.getMessage());
@@ -92,7 +93,7 @@ class MaxProfitCalculatorTest {
 
 
         MaxProfitException maxProfitException = assertThrows(MaxProfitException.class, () -> {
-            maxProfitCalculator.calculate("validSymbol",stockDtoList);
+            maxProfitCalculationService.calculate("validSymbol", stockDtoList);
         });
 
         assertEquals("Cannot make a profit because all prices are same.", maxProfitException.getMessage());
@@ -118,7 +119,7 @@ class MaxProfitCalculatorTest {
                 .build());
 
         MaxProfitException maxProfitException = assertThrows(MaxProfitException.class, () -> {
-            maxProfitCalculator.calculate("validSymbol",stockDtoList);
+            maxProfitCalculationService.calculate("validSymbol", stockDtoList);
         });
 
         assertEquals("Cannot make a profit because the price keeps falling.", maxProfitException.getMessage());
