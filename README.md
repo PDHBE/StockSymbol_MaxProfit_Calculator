@@ -36,6 +36,9 @@ US stock symbol(e.g. AAPL, GOOG) 입력시 지난, 최대 180 일의 __max profi
 
 ## Architecture #2
 
+<img width="413" alt="스크린샷 2021-07-06 오후 6 38 45" src="https://user-images.githubusercontent.com/82703938/124578965-ab414780-de89-11eb-8a18-4a9784258f28.png">
+<img width="279" alt="스크린샷 2021-07-06 오후 6 39 40" src="https://user-images.githubusercontent.com/82703938/124579027-bb592700-de89-11eb-9d43-5eaca88a5474.png">
+
 
 
 ---
