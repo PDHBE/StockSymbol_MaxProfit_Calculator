@@ -1,8 +1,9 @@
-package com.github.pdhbe.stocksymbolmaxprofitcalculator.data.source.twelve;
+package com.github.pdhbe.stocksymbolmaxprofitcalculator.infra.twelve;
 
-import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stock.StockDto;
-import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stock.StockDtoFetcher;
-import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stock.StockException;
+import com.github.pdhbe.stocksymbolmaxprofitcalculator.domain.model.StockDto;
+import com.github.pdhbe.stocksymbolmaxprofitcalculator.domain.model.StockDao;
+import com.github.pdhbe.stocksymbolmaxprofitcalculator.domain.model.StockException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -15,11 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class TwelveDataAPI implements StockDtoFetcher {
-    private static final RestTemplate restTemplate = new RestTemplate();
+@RequiredArgsConstructor
+public class TwelveDao implements StockDao {
+    private final RestTemplate restTemplate;
 
     @Override
-    public List<StockDto> getDailyStockList(String stockSymbol) {
+    public List<StockDto> stocks(String stockSymbol) {
         return convertToStockDtoList(getTwelveDtoList(getTwelveResponse(stockSymbol)));
     }
 
@@ -37,18 +39,18 @@ public class TwelveDataAPI implements StockDtoFetcher {
         return stockDtoList;
     }
 
-    private List<TwelveDto> getTwelveDtoList(ResponseEntity<TwelveResponse> twelveResponse) {
+    private List<TwelveDto> getTwelveDtoList(ResponseEntity<TwelveResponseDto> twelveResponse) {
         return twelveResponse.getBody().getTwelveDtoList();
     }
 
-    private ResponseEntity<TwelveResponse> getTwelveResponse(String stockSymbol) {
+    private ResponseEntity<TwelveResponseDto> getTwelveResponse(String stockSymbol) {
         String url = "https://twelve-data1.p.rapidapi.com/time_series" +
                 "?symbol=" + stockSymbol + "&interval=1day&outputsize=180&format=json";
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set("x-rapidapi-key", "e5fab0f5dbmsha8d96ae52186c72p13eeaejsn3f1d1394b597");
         httpHeaders.set("x-rapidapi-host", "twelve-data1.p.rapidapi.com");
         HttpEntity httpEntity = new HttpEntity(httpHeaders);
-        ResponseEntity<TwelveResponse> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, TwelveResponse.class);
+        ResponseEntity<TwelveResponseDto> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, TwelveResponseDto.class);
         if(response.getBody().getTwelveDtoList() == null){
             throw new StockException("Invalid Stock Symbol. Input Again.");
         }

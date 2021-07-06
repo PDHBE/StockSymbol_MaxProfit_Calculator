@@ -1,4 +1,4 @@
-package com.github.pdhbe.stocksymbolmaxprofitcalculator.data.source.yahoo;
+package com.github.pdhbe.stocksymbolmaxprofitcalculator.infra.yahoo;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.github.pdhbe.stocksymbolmaxprofitcalculator.data.source.twelve;
+package com.github.pdhbe.stocksymbolmaxprofitcalculator.infra.twelve;
 
 import lombok.Data;
 

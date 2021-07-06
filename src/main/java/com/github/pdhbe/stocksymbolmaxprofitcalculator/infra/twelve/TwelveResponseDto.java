@@ -1,4 +1,4 @@
-package com.github.pdhbe.stocksymbolmaxprofitcalculator.data.source.twelve;
+package com.github.pdhbe.stocksymbolmaxprofitcalculator.infra.twelve;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class TwelveResponse {
+public class TwelveResponseDto {
     @JsonProperty("values")
     private List<TwelveDto> twelveDtoList;
 }

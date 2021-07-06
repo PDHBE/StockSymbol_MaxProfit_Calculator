@@ -1,4 +1,4 @@
-package com.github.pdhbe.stocksymbolmaxprofitcalculator.config;
+package com.github.pdhbe;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,8 +1,8 @@
-package com.github.pdhbe.stocksymbolmaxprofitcalculator.data.source.yahoo;
+package com.github.pdhbe.stocksymbolmaxprofitcalculator.infra.yahoo;
 
-import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stock.StockDto;
-import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stock.StockDtoFetcher;
-import com.github.pdhbe.stocksymbolmaxprofitcalculator.data.stock.StockException;
+import com.github.pdhbe.stocksymbolmaxprofitcalculator.domain.model.StockDto;
+import com.github.pdhbe.stocksymbolmaxprofitcalculator.domain.model.StockDao;
+import com.github.pdhbe.stocksymbolmaxprofitcalculator.domain.model.StockException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,11 +19,11 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class YahooFinanceAPI implements StockDtoFetcher {
+public class YahooDao implements StockDao {
     private final RestTemplate restTemplate;
 
     @Override
-    public List<StockDto> getDailyStockList(String stockSymbol) throws StockException {
+    public List<StockDto> stocks(String stockSymbol) throws StockException {
         return convertToStockDtoList(getYahooDtoList(getYahooResponse(stockSymbol)));
     }
 
@@ -45,18 +45,18 @@ public class YahooFinanceAPI implements StockDtoFetcher {
         return LocalDate.ofInstant(Instant.ofEpochSecond(date), ZoneId.systemDefault());
     }
 
-    private List<YahooDto> getYahooDtoList(ResponseEntity<YahooResponse> yahooResponse) {
+    private List<YahooDto> getYahooDtoList(ResponseEntity<YahooResponseDto> yahooResponse) {
         return yahooResponse.getBody().getYahooDtoList();
     }
 
-    private ResponseEntity<YahooResponse> getYahooResponse(String stockSymbol) throws StockException {
+    private ResponseEntity<YahooResponseDto> getYahooResponse(String stockSymbol) throws StockException {
         String url = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v3/get-historical-data" +
                 "?symbol=" + stockSymbol + "&region=US";
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set("x-rapidapi-key", "e5fab0f5dbmsha8d96ae52186c72p13eeaejsn3f1d1394b597");
         httpHeaders.set("x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com");
         HttpEntity httpEntity = new HttpEntity(httpHeaders);
-        ResponseEntity<YahooResponse> yahooResponse = restTemplate.exchange(url, HttpMethod.GET, httpEntity, YahooResponse.class);
+        ResponseEntity<YahooResponseDto> yahooResponse = restTemplate.exchange(url, HttpMethod.GET, httpEntity, YahooResponseDto.class);
         if (yahooResponse.getBody().getYahooDtoList() == null) {
             throw new StockException("Invalid Stock Symbol. Input Again.");
         }
