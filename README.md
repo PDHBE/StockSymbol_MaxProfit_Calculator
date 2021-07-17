@@ -1,49 +1,77 @@
 # Stock Symbol Max Profit Calculator
 
+## 소개
+
 <img width="576" alt="스크린샷 2021-06-18 오후 8 38 08" src="https://user-images.githubusercontent.com/82703938/122555855-ca606c80-d075-11eb-84b6-31ef78451a1e.png">
 
 <img width="511" alt="스크린샷 2021-06-19 오후 1 06 23" src="https://user-images.githubusercontent.com/82703938/122630518-4ce13e80-d0ff-11eb-8a49-d09c155fd155.png">
 
-US stock symbol(e.g. AAPL, GOOG) 입력시 지난, 최대 180 일의 __max profit__ 을 계산
+US stock symbol(e.g. AAPL, GOOG) 입력시, 지난 180 일의 __max profit__ 을 계산하는 웹 서비스
 
 ---
 
-## Requirements
+## 기술 스택
 
-<img width="815" src="https://user-images.githubusercontent.com/35681772/95990266-3e52d100-0e66-11eb-9344-69e8e4a39659.png">
+- Java / Spring(Boot)
 
-* Algorithm
-    - Correctly and efficiently return the max profit
+- HTML/CSS, BootStrap, Thymeleaf
 
-* Design
-    - Provide clear abstractions between the api, business, and data layer
-    - The third-party data source should be easily interchangeable
-    - Components are reusable/testable
-
-* Testing
-    - The profit calculation is thoroughly tested __(Consider the different ways price history can vary)__
-    - Other components are reasonably tested
-    - Submissions without tests will be rejected
+- Maven
 
 ---
 
-## Tech Stack
-* Java / Spring(Boot)
-* Javascript, HTML/CSS
-* Maven
-
----
-
-## Architecture #2
+## 구조
 
 <img width="413" alt="스크린샷 2021-07-06 오후 6 38 45" src="https://user-images.githubusercontent.com/82703938/124578965-ab414780-de89-11eb-8a18-4a9784258f28.png">
 <img width="279" alt="스크린샷 2021-07-06 오후 6 39 40" src="https://user-images.githubusercontent.com/82703938/124579027-bb592700-de89-11eb-9d43-5eaca88a5474.png">
 
+DDD(도메인 주도 설계)를 참고하여 ui(표현) 계층, application(응용) 계층, domain 계층, infrastructure 계층으로 분리하였습니다.
 
+### ui(표현) 계층
+
+- StockController : US Stock Symbol 에 대한 Max Profit 요청을 매핑하는 역할
+
+- ExceptionController : StockController 에서 발생하는 모든 예외를 처리하는 역할
+
+### application(응용) 계층
+
+- StockService : 도메인 객체 리스트를 받아 도메인 서비스를 호출하는 역할
+
+### domain 계층
+
+- model
+
+	- StockDto : 필요한 주식 정보에 대한 Dto
+
+	- StockDao : StockDto 리스트를 조회하는 인터페이스
+
+	- StockException : 유효하지 않은 Stock Symbol 에 대한 예외
+
+- service
+
+	- MaxProfitCalculationService : 주식 정보 리스트에 대한 최대 이익을 계산하여 그때의 정보를 리턴하는 역할
+
+	- MaxProfitDto : 최대 이익 정보 Dto
+
+	- LessThanTwoDaysException : 주식 정보가 2개 미만일 경우의 예외
+
+	- ZeroProfitException : 최대 이익이 0인 경우의 예외
+
+	- MinusProfitException : 최대 이익이 마이너스인 경우의 예외
+
+### infra structure
+
+- yahoo & twelve
+
+	- Yahoo(Twelve)Dto : 응답 메시지의 JsonObject 에 매핑되는 Dto
+
+	- Yahoo(Twelve)Dao : Rest API 를 호출하고, 응답 메시지를 파싱하여 StockDto 리스트를 리턴하는 역할
+
+	- Yahoo(Twelve)ResponseDto : 응답 메시지의 JsonArray 에 매핑되는 Dto
 
 ---
 
-## Algorithm
+## 알고리즘
 
 적용 대상
 
@@ -90,6 +118,16 @@ US stock symbol(e.g. AAPL, GOOG) 입력시 지난, 최대 180 일의 __max profi
 	- 주식 가격이 모두 같은 경우
 
 	- 주식 가격이 계속 하락하는 경우 
+
+---
+
+## 이슈
+
+- API 호출 ( HttpURLConnection vs Spring RestTemplate )
+
+	- HttpURLConnection : 응답 메시지를 InputStream 으로 받아 InputStreamReader 와 BufferReader 를 이용하여 한 줄씩 읽어야하며, 자바 객체로의 역직렬화도 직접 처리해줘야한다.
+
+	- Spring RestTemplate : restTemplate.exchange() 한 줄만으로도 호출 뿐만아니라 응답 메세지를 지정한 타입의 자바 객체로 손쉽게 받아올 수 있다.
 
 ---
 

@@ -1,4 +1,4 @@
-package com.github.pdhbe.stocksymbolmaxprofitcalculator.infra.yahoo;
+package com.github.pdhbe.stocksymbolmaxprofitcalculator.infrastructure.yahoo;
 
 import com.github.pdhbe.stocksymbolmaxprofitcalculator.domain.model.StockDto;
 import com.github.pdhbe.stocksymbolmaxprofitcalculator.domain.model.StockDao;
@@ -58,7 +58,7 @@ public class YahooDao implements StockDao {
         HttpEntity httpEntity = new HttpEntity(httpHeaders);
         ResponseEntity<YahooResponseDto> yahooResponse = restTemplate.exchange(url, HttpMethod.GET, httpEntity, YahooResponseDto.class);
         if (yahooResponse.getBody().getYahooDtoList() == null) {
-            throw new StockException("Invalid Stock Symbol. Input Again.");
+            throw new StockException();
         }
         return yahooResponse;
     }

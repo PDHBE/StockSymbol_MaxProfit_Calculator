@@ -1,7 +1,7 @@
-package com.github.pdhbe.stocksymbolmaxprofitcalculator.infra.twelve;
+package com.github.pdhbe.stocksymbolmaxprofitcalculator.infrastructure.twelve;
 
-import com.github.pdhbe.stocksymbolmaxprofitcalculator.domain.model.StockDto;
 import com.github.pdhbe.stocksymbolmaxprofitcalculator.domain.model.StockDao;
+import com.github.pdhbe.stocksymbolmaxprofitcalculator.domain.model.StockDto;
 import com.github.pdhbe.stocksymbolmaxprofitcalculator.domain.model.StockException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
@@ -30,10 +30,10 @@ public class TwelveDao implements StockDao {
         twelveDtoList.forEach(twelveDto -> {
             stockDtoList.add(
                     StockDto.builder()
-                    .date(LocalDate.parse(twelveDto.getDatetime()))
-                    .lowPrice(Double.parseDouble(twelveDto.getLow()))
-                    .highPrice(Double.parseDouble(twelveDto.getHigh()))
-                    .build()
+                            .date(LocalDate.parse(twelveDto.getDatetime()))
+                            .lowPrice(Double.parseDouble(twelveDto.getLow()))
+                            .highPrice(Double.parseDouble(twelveDto.getHigh()))
+                            .build()
             );
         });
         return stockDtoList;
@@ -51,9 +51,10 @@ public class TwelveDao implements StockDao {
         httpHeaders.set("x-rapidapi-host", "twelve-data1.p.rapidapi.com");
         HttpEntity httpEntity = new HttpEntity(httpHeaders);
         ResponseEntity<TwelveResponseDto> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, TwelveResponseDto.class);
-        if(response.getBody().getTwelveDtoList() == null){
-            throw new StockException("Invalid Stock Symbol. Input Again.");
+        if (response.getBody().getTwelveDtoList() == null) {
+            throw new StockException();
         }
         return response;
     }
 }
+

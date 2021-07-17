@@ -13,7 +13,7 @@ public class MaxProfitCalculationService {
 
     public MaxProfitDto calculate(String stockSymbol, List<StockDto> dailyStockDtoList) throws MaxProfitException {
         if (dailyStockDtoList.size() < 2) {
-            throw new MaxProfitException("It should be at least two days.");
+            throw new LessThanTwoDaysException();
         }
 
         dailyStockDtoList.sort(Comparator.comparing(StockDto::getDate));
@@ -41,10 +41,10 @@ public class MaxProfitCalculationService {
         }
 
         if (maxProfit == 0) {
-            throw new MaxProfitException("Cannot make a profit because all prices are same.");
+            throw new ZeroProfitException();
         }
         if (maxProfit < 0) {
-            throw new MaxProfitException("Cannot make a profit because the price keeps falling.");
+            throw new MinusProfitException();
         }
 
         return MaxProfitDto.builder()
